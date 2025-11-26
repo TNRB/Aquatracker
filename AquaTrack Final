@@ -1,0 +1,182 @@
+import java.util.Scanner;
+public class AquaTrack {
+    public static void main(String[] args) {
+        MenuController controller = new MenuController();
+        controller.start();
+    }
+}
+
+public class MenuController {
+
+    private final Scanner scanner = new Scanner(System.in);
+    private final UsageRecord usageRecord = new UsageRecord();
+    private final LimitManager limitManager = new LimitManager();
+    private final BillCalculator calculator = new StandardBillCalculator();
+
+    public void start() {
+        int choice;
+        do {
+            showMenu();
+            choice = scanner.nextInt();
+            System.out.println();
+
+            switch (choice) {
+                case 1 -> budgetCalculator();
+                case 2 -> setLimit();
+                case 3 -> inputUsage();
+                case 4 -> viewHistory();
+                case 5 -> estimateBill();
+                case 6 -> System.out.println("Thank you for using AquaTrack!");
+                default -> System.out.println("Invalid option. Choose 1–6.\n");
+            }
+
+        } while (choice != 6);
+    }
+
+    private void showMenu() {
+        System.out.println("\n===== Water Usage Tracker Menu =====");
+        System.out.println("1. Budget-Based Calculator");
+        System.out.println("2. Set Monthly Water Usage Limit");
+        System.out.println("3. Input Weekly Usage");
+        System.out.println("4. View Usage History");
+        System.out.println("5. Estimate Water Bill");
+        System.out.println("6. Exit");
+        System.out.print("Choose an option: ");
+    }
+
+    private void budgetCalculator() {
+        System.out.print("Enter your desired water bill budget (₱): ");
+        double budget = scanner.nextDouble();
+
+        double totalMultiplier = 
+                (1 + BillCalculator.VAT_PERCENT) * 
+                (1 + BillCalculator.ENVIRONMENTAL_PERCENT);
+
+        double volume = budget / (BillCalculator.RATE_PER_CUBIC_METER * totalMultiplier);
+
+        System.out.printf("\nBudget ₱%.2f allows approx %.2f m³/month%n", budget, volume);
+        System.out.printf("Weekly: %.2f m³%n", volume / 4);
+    }
+
+    private void setLimit() {
+        System.out.print("Set monthly limit (m³): ");
+        double limit = scanner.nextDouble();
+        limitManager.setMonthlyLimit(limit);
+
+        System.out.printf("Monthly limit set: %.2f m³%n", limit);
+        System.out.printf("Ideal per week: %.2f m³%n", limitManager.getWeeklyIdealLimit());
+    }
+
+    private void inputUsage() {
+        System.out.print("Enter week (1–4): ");
+        int week = scanner.nextInt();
+
+        if (week < 1 || week > 4) {
+            System.out.println("Invalid week.");
+            return;
+        }
+
+        System.out.print("Enter usage for week #" + week + " (m³): ");
+        double usage = scanner.nextDouble();
+
+        usageRecord.setWeekUsage(week, usage);
+        System.out.println("Recorded!");
+    }
+
+    private void viewHistory() {
+        usageRecord.printHistory(limitManager.getMonthlyLimit());
+    }
+
+    private void estimateBill() {
+        double total = usageRecord.getTotalUsage();
+        double bill = calculator.computeBill(total);
+
+        System.out.println("\n=== Estimated Water Bill ===");
+        System.out.printf("Total Water Used: %.2f m³%n", total);
+        System.out.printf("Estimated Bill: ₱%.2f%n", bill);
+    }
+}
+
+
+public abstract class BillCalculator {
+    protected static final double RATE_PER_CUBIC_METER = 46.15;
+    protected static final double ENVIRONMENTAL_PERCENT = 0.20;
+    protected static final double VAT_PERCENT = 0.12;
+
+    public abstract double computeBill(double totalUsage);
+
+    public double computeEnvironmentalFee(double waterCharge) {
+        return waterCharge * ENVIRONMENTAL_PERCENT;
+    }
+
+    public double computeVAT(double subtotal) {
+        return subtotal * VAT_PERCENT;
+    }
+}
+
+public class StandardBillCalculator extends BillCalculator {
+
+    @Override
+    public double computeBill(double totalUsage) {
+        double waterCharge = totalUsage * RATE_PER_CUBIC_METER;
+        double environmental = computeEnvironmentalFee(waterCharge);
+        double subtotal = waterCharge + environmental;
+        double vat = computeVAT(subtotal);
+        return subtotal + vat;
+    }
+}
+
+public class UsageRecord {
+    private final double[] weeklyUsage = new double[4];
+    private final boolean[] entered = new boolean[4];
+
+    public void setWeekUsage(int week, double usage) {
+        weeklyUsage[week - 1] = usage;
+        entered[week - 1] = true;
+    }
+
+    public double getTotalUsage() {
+        double total = 0;
+        for (double u : weeklyUsage) total += u;
+        return total;
+    }
+
+    public void printHistory(double monthlyLimit) {
+        double total = getTotalUsage();
+        System.out.println("\n=== Weekly Usage History ===");
+
+        for (int i = 0; i < 4; i++) {
+            if (entered[i]) {
+                System.out.printf("Week %d: %.2f m³%n", i + 1, weeklyUsage[i]);
+            } else {
+                System.out.printf("Week %d: Not entered%n", i + 1);
+            }
+        }
+
+        System.out.printf("\nTotal usage so far: %.2f m³%n", total);
+        System.out.printf("Monthly limit: %.2f m³%n", monthlyLimit);
+
+        if (monthlyLimit > 0) {
+            if (total > monthlyLimit)
+                System.out.printf("Exceeded limit by %.2f m³%n", total - monthlyLimit);
+            else
+                System.out.printf("Remaining: %.2f m³%n", monthlyLimit - total);
+        }
+    }
+}
+
+public class LimitManager {
+    private double monthlyLimit = 0;
+
+    public void setMonthlyLimit(double limit) {
+        this.monthlyLimit = limit;
+    }
+
+    public double getMonthlyLimit() {
+        return monthlyLimit;
+    }
+
+    public double getWeeklyIdealLimit() {
+        return monthlyLimit / 4;
+    }
+}
