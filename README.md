@@ -1,43 +1,33 @@
+#AquaTrack
+##--------------------AquaTrack: --------------------
+##A Smart Monitoring System for Household Water Usage
 
-#AquaTrack: 
-#A Smart Monitoring System for Household Water Usage
-
-#Overview
-
+###Overview
 	AquaTrack: A Smart Monitoring System for Household Water Usage is a console-based Java program designed to help households track and manage their daily water consumption. The system allows users to record water usage for various activities, view summaries, generate reports, and monitor overall consumption trends. Built using Object-Oriented Programming principles, AquaTrack applies encapsulation to protect and organize data within classes, ensuring controlled access through private fields and public methods. It uses inheritance to create a class hierarchy where general activity properties are stored in a base class, while specific activities such as bathing or laundry extend this class. Through polymorphism, the system enables different water-related activities to implement their own versions of usage calculations, allowing the same method call to behave differently depending on the object type. Abstraction is applied by defining abstract classes or interfaces that outline essential behaviors without revealing underlying code details, simplifying the structure and promoting reusability. Overall, AquaTrack provides an efficient, menu-driven console application that demonstrates proper OOP design while promoting responsible and informed water usage within the household.
 
-
-
-#Concepts 
+###Concepts 
 Encapsulation - means wrapping data + methods inside a class and restricting access using access modifiers (like private).
 
 Example in code: private final double[] weeklyUsage = new double[4];
                                           private final boolean[] entered = new boolean[4];
 
 Inheritance - means a class extends another class, inheriting its attributes and methods.
-
 	Example in code: public abstract class BillCalculator
        public class StandardBillCalculator extends BillCalculator
 
 Polymorphism - means the program can treat a subclass object as its superclass type and call the overridden methods properly.
-
 	Example in code: private final BillCalculator calculator = new StandardBillCalculator();
 				            (Parent Class)                                (Child Class)
 	Method: calculator.computeBill(total)
 		    (Runtime Polymorphism)
 
 Abstraction - hides unnecessary complexity and provides a simplified interface.
-
 	Example in code: public abstract class BillCalculator {
    			       public abstract double computeBill(double totalUsage); }
 
 Explanation: It forces subclasses to implement computeBill(). It hides implementation details (like VAT and environmental fee) exposes essential methods.
 
-
-
-
-
-#Structure
+###Structure
 The code structure of the project can be broken down into 6 classes. Each class fulfills a predefined role in the flow of the program. These are:
 
 1. AquaTrack
@@ -52,24 +42,19 @@ The code structure of the project can be broken down into 6 classes. Each class 
 		   -Asks for a budget.
 		   -Reverse-calculates how many cubic meters of water you can afford.
 		   -Shows monthly & weekly breakdown.
-
 		2. Set Monthly Limit (setLimit())
 		   -Lets user set a monthly water usage cap.
 		   -Displays ideal weekly usage.
-
 		3. Input Weekly Usage (inputUsage())
 		   -Allows the user to enter usage for week 1–4.
 		   -Validates week number.
 		   -Stores usage.
-
 		4. View Usage History (viewHistory())
 		   -Calls UsageRecord.printHistory()
 		   -Displays weekly usage + comparisons to monthly limit.
-
 		5. Estimate Water Bill (estimateBill())
 		   -Retrieves total usage.
 		   -Computes bill using the BillCalculator.
-
 		6. Exit
 		   -Prints a simple exit message.
 		   -Terminates the program.
@@ -109,6 +94,7 @@ The program can be run in a variety of ways, based on the requirements of the us
 3. View Usage History and Estimate Water Bill 
    -At any point the user may view the usage history and/or estimate their water bill by choosing the appropriate options.
 
-
-
 Sample Output
+
+
+
