@@ -24,9 +24,9 @@
   - means the program can treat a subclass object as its superclass type and call the overridden methods properly.
 
         Example in code: private final BillCalculator calculator = new StandardBillCalculator();
-				                                (Parent Class)                     (Child Class)
+		                               (Parent Class)                     (Child Class)
                  Method: calculator.computeBill(total)
-		                       (Runtime Polymorphism)
+		                  (Runtime Polymorphism)
 
 - __Abstraction__ 
   - hides unnecessary complexity and provides a simplified interface.
