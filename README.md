@@ -96,7 +96,7 @@ The program can be run in a variety of ways, based on the requirements of the us
 <img width="328" height="232" alt="2" src="https://github.com/user-attachments/assets/14340f33-c0b1-4741-b117-cc9228c6e8ff" />\
 <img width="372" height="242" alt="3" src="https://github.com/user-attachments/assets/7219b8a9-eaf7-451c-bfa4-3084c61ddea5" />\
 <img width="354" height="376" alt="4" src="https://github.com/user-attachments/assets/5f962595-5b6b-48a6-97b8-24b36b5d932b" />\
-<img width="436" height="280" alt="5" src="https://github.com/user-attachments/assets/d47c6cb5-80e6-40cb-9a09-412a9adb00d8" />\
+<img width="436" height="280" alt="5" src="https://github.com/user-attachments/assets/d47c6cb5-80e6-40cb-9a09-412a9adb00d8" />
 
 
 
