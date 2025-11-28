@@ -79,7 +79,6 @@ The code structure of the project can be broken down into 6 classes. Each class 
 - It stores and returns the monthly limit.
 - Computes a recommended weekly value.
 
-
 ### -- _How to Run_ --
 The program can be run in a variety of ways, based on the requirements of the user. For example if the user intends to find out the recommended water usage for a set price point, then by typing 1 on the input screen they are able to input their budget and then it returns the recommended water usage limit in order to stick with the budget. If the user wishes to use the tracker, the steps to do so are as follows:
 1. Set monthly limit
@@ -92,6 +91,14 @@ The program can be run in a variety of ways, based on the requirements of the us
    -At any point the user may view the usage history and/or estimate their water bill by choosing the appropriate options.
 
 ### -- ***Sample Output*** --
+
+<img width="413" height="210" alt="1" src="https://github.com/user-attachments/assets/3f43435d-16fc-4dcc-b078-d7b1a691da2b" />\
+<img width="328" height="232" alt="2" src="https://github.com/user-attachments/assets/14340f33-c0b1-4741-b117-cc9228c6e8ff" />\
+<img width="372" height="242" alt="3" src="https://github.com/user-attachments/assets/7219b8a9-eaf7-451c-bfa4-3084c61ddea5" />\
+<img width="354" height="376" alt="4" src="https://github.com/user-attachments/assets/5f962595-5b6b-48a6-97b8-24b36b5d932b" />\
+<img width="436" height="280" alt="5" src="https://github.com/user-attachments/assets/d47c6cb5-80e6-40cb-9a09-412a9adb00d8" />\
+
+
 
 
 
