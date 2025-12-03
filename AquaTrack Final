@@ -1,12 +1,13 @@
 import java.util.Scanner;
+//contains the main class, its role is to create MenuController object and call start.
 public class AquaTrack {
     public static void main(String[] args) {
         MenuController controller = new MenuController();
         controller.start();
     }
 }
-
-public class MenuController {
+// Menu controller handles all menu and user interaction. Uses a do while loop to continue until user selects Exit.
+class MenuController {
 
     private final Scanner scanner = new Scanner(System.in);
     private final UsageRecord usageRecord = new UsageRecord();
@@ -32,7 +33,7 @@ public class MenuController {
 
         } while (choice != 6);
     }
-
+    //shows the menu and uses a switch statement.
     private void showMenu() {
         System.out.println("\n===== Water Usage Tracker Menu =====");
         System.out.println("1. Budget-Based Calculator");
@@ -43,13 +44,13 @@ public class MenuController {
         System.out.println("6. Exit");
         System.out.print("Choose an option: ");
     }
-
+    //for bugdetbased calculation
     private void budgetCalculator() {
         System.out.print("Enter your desired water bill budget (₱): ");
         double budget = scanner.nextDouble();
 
-        double totalMultiplier = 
-                (1 + BillCalculator.VAT_PERCENT) * 
+        double totalMultiplier =
+                (1 + BillCalculator.VAT_PERCENT) *
                 (1 + BillCalculator.ENVIRONMENTAL_PERCENT);
 
         double volume = budget / (BillCalculator.RATE_PER_CUBIC_METER * totalMultiplier);
@@ -57,7 +58,7 @@ public class MenuController {
         System.out.printf("\nBudget ₱%.2f allows approx %.2f m³/month%n", budget, volume);
         System.out.printf("Weekly: %.2f m³%n", volume / 4);
     }
-
+    // for setting monthly limit.
     private void setLimit() {
         System.out.print("Set monthly limit (m³): ");
         double limit = scanner.nextDouble();
@@ -66,7 +67,7 @@ public class MenuController {
         System.out.printf("Monthly limit set: %.2f m³%n", limit);
         System.out.printf("Ideal per week: %.2f m³%n", limitManager.getWeeklyIdealLimit());
     }
-
+    // incharge for receiving input from week 1-4
     private void inputUsage() {
         System.out.print("Enter week (1–4): ");
         int week = scanner.nextInt();
@@ -86,7 +87,7 @@ public class MenuController {
     private void viewHistory() {
         usageRecord.printHistory(limitManager.getMonthlyLimit());
     }
-
+    //for the calculation of estimated bill.
     private void estimateBill() {
         double total = usageRecord.getTotalUsage();
         double bill = calculator.computeBill(total);
@@ -97,8 +98,8 @@ public class MenuController {
     }
 }
 
-
-public abstract class BillCalculator {
+//utilized abstraction in calculating the estimated bill to avoid program complication making it easier to read and maintain.
+abstract class BillCalculator {
     protected static final double RATE_PER_CUBIC_METER = 46.15;
     protected static final double ENVIRONMENTAL_PERCENT = 0.20;
     protected static final double VAT_PERCENT = 0.12;
@@ -113,8 +114,8 @@ public abstract class BillCalculator {
         return subtotal * VAT_PERCENT;
     }
 }
-
-public class StandardBillCalculator extends BillCalculator {
+//uses the oop principle Inheritance which means that the child class inherits the functions of parent class allowing for code reuse.
+class StandardBillCalculator extends BillCalculator {
 
     @Override
     public double computeBill(double totalUsage) {
@@ -125,8 +126,8 @@ public class StandardBillCalculator extends BillCalculator {
         return subtotal + vat;
     }
 }
-
-public class UsageRecord {
+// utilizes Encapsulation, an oop principle that hides the internal details of an object and exposing only what is necessary
+class UsageRecord {
     private final double[] weeklyUsage = new double[4];
     private final boolean[] entered = new boolean[4];
 
@@ -164,8 +165,8 @@ public class UsageRecord {
         }
     }
 }
-
-public class LimitManager {
+// this also applies the encapsulation principle. Variables are hidden from other classes.
+class LimitManager {
     private double monthlyLimit = 0;
 
     public void setMonthlyLimit(double limit) {
